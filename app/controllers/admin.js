@@ -2,6 +2,8 @@ const db = require('../../config/mongodb');
 const utils=require('../middleware/utils')
 const {validationResult}=require('express-validator')
 const ObjectId=require('mongodb').ObjectID
+const multer=require('multer')
+
 
 /**
  * admin add product controller
@@ -11,9 +13,7 @@ const ObjectId=require('mongodb').ObjectID
 
 exports.addproduct=async (req,res)=>{
     try{
-        console.log('mikb',db)
         const err=validationResult(req)
-        console.log(err)
         if(err.errors.length!==0){
             return utils.handleError(res,errors)
         }

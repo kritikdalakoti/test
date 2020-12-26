@@ -3,6 +3,34 @@ const validate=require('../controllers/admin_validate')
 const router=express.Router()
 const controllers=require('../controllers/admin')
 const AdminAuth=require('../middleware/admin_Auth')
+const multer=require('multer')
+const path=require('path')
+// multer setup
+
+const storage=multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null,path.join(__dirname,'../../public/my-uploads'))
+    },
+    filename:(req,file,cb)=>{
+        cb(undefined,Date.now()+'-'+file.originalname)
+    }
+})
+
+
+const upload=multer({
+    storage,
+    limits:{
+        fileSize:2000000
+    },
+    fileFilter(req,file,cb){
+        if(!file.originalname.match(/\.(png|jpeg|jpg|gif)$/)){
+            cb(new Error('File must be an image!!'))   
+        }
+        cb(undefined,true)
+    }
+})
+
+
 
 /**
  * admin add product route
@@ -11,6 +39,7 @@ const AdminAuth=require('../middleware/admin_Auth')
 router.post(
     '/addproduct',
     validate.addproduct,
+    upload.array('avatar'),
     controllers.addproduct
 )
 

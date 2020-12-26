@@ -43,12 +43,6 @@ exports.addproduct=[
     .not()
     .isEmpty()
     .withMessage('IS_EMPTY'),
-    check('image')
-    .exists()
-    .withMessage('MISSING')
-    .not()
-    .isEmpty()
-    .withMessage('IS_EMPTY'),
 
     check('description')
     .exists()
