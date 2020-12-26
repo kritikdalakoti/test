@@ -38,14 +38,12 @@ exports.successResponse = (message, data, res) => {
  * @param {Object} err - error object
  */
 exports.handleError = (res, err) => {
-  
+  console.log('hvh',err)
   // Sends error to user
   res.json({
     status: "Error",
     message: "Please see details below",
-    errors: {
-      msg: err
-    }
+    errors: err
   })
 }
 

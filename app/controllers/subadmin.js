@@ -5,6 +5,9 @@ const utils=require('../middleware/utils')
 
 const db = require('../../config/mongodb');
 
+
+
+
 /**
  * generating token function
  * @param {Object} id - user id 
@@ -30,11 +33,13 @@ exports.logout= async (req, res,next) => {
 exports.register=async (req, res) => {
   try{
     const err=validationResult(req)
+    console.log(req.files)
     if(err.errors.length!==0){
       return utils.handleError(res,errors)
     }
-    const doc= db.db.collection('Subadmin').insertOne(req.body)
-    utils.successResponse('Added Successfully',doc,res)
+    
+    const doc= await db.db.collection('Subadmin').insertOne(req.body)
+    utils.successResponse('Added Successfully',doc.ops,res)
   }catch(e){
     utils.handleError(res,e)
   }

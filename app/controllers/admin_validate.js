@@ -78,3 +78,27 @@ exports.appliance_services=[
     .isEmpty()
     .withMessage('IS_EMPTY'),
 ]
+
+exports.add_category=[
+    check('category')        
+    .exists()
+    .withMessage('MISSING')
+    .not()
+    .isEmpty()
+    .withMessage('IS_EMPTY')
+]
+
+exports.add_subcategory=[
+    check('category')        
+    .exists()
+    .withMessage('MISSING')
+    .not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
+    check('subcategory')        
+    .exists()
+    .withMessage('MISSING')
+    .not()
+    .isEmpty()
+    .withMessage('IS_EMPTY')
+]

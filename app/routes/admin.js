@@ -81,4 +81,16 @@ router.post(
     controllers.add_appliance_and_services
 )
 
+router.post(
+    '/add_category',
+    validate.add_category,
+    controllers.add_category
+)
+
+router.post(
+    '/add_subcategory',
+    validate.add_subcategory,
+    controllers.add_subcategory
+)
+
 module.exports=router

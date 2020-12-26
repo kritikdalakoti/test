@@ -15,10 +15,10 @@ exports.addproduct=async (req,res)=>{
     try{
         const err=validationResult(req)
         if(err.errors.length!==0){
-            return utils.handleError(res,errors)
+            return utils.handleError(res,err.errors)
         }
         const doc=await db.db.collection('Products').insertOne(req.body)
-        utils.successResponse('Product Added Successfully!',doc,res)
+        utils.successResponse('Product Added Successfully!',doc.ops,res)
     }catch(e){
         console.log(e)
         utils.handleError(res,e)
@@ -91,14 +91,47 @@ exports.add_appliance_and_services=async(req,res)=>{
         const err=validationResult(req)
         console.log(err)
         if(err.errors.length!==0){
-            return utils.handleError(res,errors)
+            return utils.handleError(res,err.errors)
         }
         const doc=await db.db.collection('Appliances').insertOne(req.body) 
-        utils.successResponse('Added Appliance and Services!',doc,res)
+        utils.successResponse('Added Appliance and Services!',doc.ops,res)
 
     }catch(e){
         utils.handleError(res,e)
     }
+}
+
+/**
+ * Admin adding category
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+
+exports.add_category=async(req,res)=>{
+    try{
+        const err=validationResult(req)
+        if(err.errors.length!==0){
+            return utils.handleError(res,err.errors)
+        }
+        const doc=await db.db.collection('category_Subcategory').insertOne(req.body)
+        utils.successResponse('Added Category !!',doc.ops,res)
+    }catch(e){
+        utils.handleError(res,e)
+    }
+}
+
+exports.add_subcategory=async(req,res)=>{
+    try{
+        const err=validationResult(req)
+        if(err.errors.length!==0){
+            return utils.handleError(res,err.errors)
+        }
+    const doc=await db.db.collection('category_Subcategory').findAndModify({category:req.body.category},[],{$push:{subcategory:req.body.subcategory}})
+    utils.successResponse('Added Subcategory!',doc.value,res)
+    }catch(e){
+        utils.handleError(res,e)
+    }
+    
 }
 
 
