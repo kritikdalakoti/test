@@ -44,11 +44,17 @@ router.post(
 )
 
 /**
- * Admin getting list of all subadmins routes
+ * Admin getting list of all verified subadmins routes
  */
 router.get(
     '/all_subadmin',
     controllers.get_all_subadmins
+)
+
+router.get(
+    '/all_nonverified_subadmin',
+    controllers.get_all_nonverified_subadmins
+    
 )
 
 /**
@@ -92,5 +98,12 @@ router.post(
     validate.add_subcategory,
     controllers.add_subcategory
 )
+
+router.get(
+    '/get_category_subcategory',
+    controllers.get_category_subcategories
+)
+
+
 
 module.exports=router

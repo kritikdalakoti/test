@@ -44,6 +44,19 @@ exports.get_all_subadmins=async(req,res)=>{
     }
 }
 
+exports.get_all_nonverified_subadmins=async(req,res)=>{
+    try{
+        const docs=await db.db.collection('Sunadmin').find({isSubAdmin:false})
+        var arr=[]
+        await docs.forEach(element => {
+        arr.push(element)
+     })
+        utils.successResponse('Allsubadmins',arr,res)
+    }catch(e){
+        utils.handleError(res,e)
+    }
+}
+
 /**
  * Admin getting all published products controller
  * @param {Object} req - request object
@@ -132,6 +145,15 @@ exports.add_subcategory=async(req,res)=>{
         utils.handleError(res,e)
     }
     
+}
+
+exports.get_category_subcategories=async(req,res)=>{
+    try{
+       const docs= await db.db.collection('category_Subcategory').find({})
+       utils.successResponse('Categories and Subcategories List',docs,res)
+    }catch(e){
+        utils.handleError(res,e)
+    }
 }
 
 
