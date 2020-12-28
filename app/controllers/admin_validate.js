@@ -102,3 +102,24 @@ exports.add_subcategory=[
     .isEmpty()
     .withMessage('IS_EMPTY')
 ]
+
+exports.add_plans=[
+    check('cost')        
+    .exists()
+    .withMessage('MISSING')
+    .not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
+    check('services_ordered')        
+    .exists()
+    .withMessage('MISSING')
+    .not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
+    check('Amc_Type')        
+    .exists()
+    .withMessage('MISSING')
+    .not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
+]

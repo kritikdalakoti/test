@@ -44,6 +44,12 @@ exports.get_all_subadmins=async(req,res)=>{
     }
 }
 
+/**
+ * Admin getting all subadmins list route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+
 exports.get_all_nonverified_subadmins=async(req,res)=>{
     try{
         const docs=await db.db.collection('Sunadmin').find({isSubAdmin:false})
@@ -133,6 +139,12 @@ exports.add_category=async(req,res)=>{
     }
 }
 
+/**
+ * Admin adding sub-category
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+
 exports.add_subcategory=async(req,res)=>{
     try{
         const err=validationResult(req)
@@ -147,14 +159,59 @@ exports.add_subcategory=async(req,res)=>{
     
 }
 
+/**
+ * Api for getting subcategory
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+*/
+
 exports.get_category_subcategories=async(req,res)=>{
     try{
        const docs= await db.db.collection('category_Subcategory').find({})
-       utils.successResponse('Categories and Subcategories List',docs,res)
+       var arr=[]
+       await docs.forEach(doc=>{
+           arr.push(doc)
+       })
+       utils.successResponse('Categories and Subcategories List',arr,res)
     }catch(e){
         utils.handleError(res,e)
     }
 }
 
+/**
+ * Admin adding plans
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
 
+exports.addplans=async (req,res)=>{
+    try{
+        const err=validationResult(req)
+        if(err.errors.length!==0){
+            return utils.handleError(res,err.errors)
+        }
+        const doc=await db.db.collection('Plans').insertOne(req.body)
+        utils.successResponse('Added Category !!',doc.ops,res)
+    }catch(e){
+    utils.handleError(res,e)
+    }
+}
 
+/**
+ * Api for getting all plans
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+
+exports.getplans=async(req,res)=>{
+    try{
+        const docs= await db.db.collection('Plans').find({})
+        var arr=[]
+        await docs.forEach(doc=>{
+            arr.push(doc)
+        })
+        utils.successResponse('All Plans',arr,res)
+    }catch(e){
+        utils.handleError(res,e)
+    }
+}

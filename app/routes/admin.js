@@ -54,7 +54,7 @@ router.get(
 router.get(
     '/all_nonverified_subadmin',
     controllers.get_all_nonverified_subadmins
-    
+
 )
 
 /**
@@ -87,11 +87,19 @@ router.post(
     controllers.add_appliance_and_services
 )
 
+/**
+ * Admin adding category
+ */
+
 router.post(
     '/add_category',
     validate.add_category,
     controllers.add_category
 )
+
+/**
+ * Admin adding subcategory
+ */
 
 router.post(
     '/add_subcategory',
@@ -99,11 +107,32 @@ router.post(
     controllers.add_subcategory
 )
 
+/**
+ * Api for getting subcategory and category
+ */
+
 router.get(
     '/get_category_subcategory',
     controllers.get_category_subcategories
 )
 
+/**
+ * Api for creating AMC plans
+ */
 
+ router.post(
+    '/createplan',
+    validate.add_plans,
+    controllers.addplans
+    )
+
+ /**
+ * Api for getting all AMC plans
+ */
+
+ router.get(
+    '/getplans',
+     controllers.getplans
+ )
 
 module.exports=router
