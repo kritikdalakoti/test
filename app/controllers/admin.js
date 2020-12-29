@@ -26,6 +26,24 @@ exports.addproduct=async (req,res)=>{
 }
 
 /**
+ * Admin accepting a subadmin thus verifying it
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+
+ exports.addsubadmin=async(req,res)=>{
+     try{
+        const subadmin_id=ObjectId(req.params.id)
+        const docs=await db.db.collection('Subadmin').findAndModify({_id:subadmin_id},[],{$set:{isSubAdmin:true}})
+        utils.successResponse('Verified Subadmin',docs.value,res)
+     }catch(e){
+        utils.handleError(res,e)
+     }
+    
+}
+
+
+/**
  * Admin getting all subadmins list route
  * @param {Object} req - request object
  * @param {Object} res - response object
@@ -91,7 +109,6 @@ exports.get_Published_Products=async(req,res)=>{
 exports.removal_Subadmins=async (req,res)=>{
     try{
         const id= ObjectId(req.params.id) 
-        console.log(id)
         await db.db.collection('Subadmin').deleteOne({_id:id,isSubAdmin:true})
         utils.successResponse('Deleted Subadmin',id,res)
     }catch(e){
@@ -160,6 +177,25 @@ exports.add_subcategory=async(req,res)=>{
 }
 
 /**
+ * Admin adding sub-category
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+
+ exports.addcompany=async (req,res)=>{
+     try{
+        const err=validationResult(req)
+        if(err.errors.length!==0){
+            return utils.handleError(res,err.errors)
+        }
+        const doc=await db.db.collection('Company').insertOne(req.body)
+        utils.successResponse('Added Company !!',doc.ops,res)
+     }catch(e){
+utils.handleError(res,e)
+     }
+ }
+
+/**
  * Api for getting subcategory
  * @param {Object} req - request object
  * @param {Object} res - response object
@@ -173,6 +209,25 @@ exports.get_category_subcategories=async(req,res)=>{
            arr.push(doc)
        })
        utils.successResponse('Categories and Subcategories List',arr,res)
+    }catch(e){
+        utils.handleError(res,e)
+    }
+}
+
+/**
+ * Api for getting company
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+*/
+
+exports.getcompany=async(req,res)=>{
+    try{
+       const docs= await db.db.collection('Company').find({})
+       var arr=[]
+       await docs.forEach(doc=>{
+           arr.push(doc)
+       })
+       utils.successResponse('All Company List',arr,res)
     }catch(e){
         utils.handleError(res,e)
     }
@@ -211,6 +266,130 @@ exports.getplans=async(req,res)=>{
             arr.push(doc)
         })
         utils.successResponse('All Plans',arr,res)
+    }catch(e){
+        utils.handleError(res,e)
+    }
+}
+
+/**
+ * Api for getting all appliances and services
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+
+exports.getallappliances=async (reeq,res)=>{
+    try{
+        const docs= await db.db.collection('Appliances').find({})
+        var arr=[]
+        await docs.forEach(doc=>{
+            arr.push(doc)
+        })
+        utils.successResponse('All Plans',arr,res)
+    }catch(e){
+utils.handleError(res,e)
+    }
+}
+
+
+
+/**
+ * Api for deleting a particular appliance
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+
+exports.delete_appliance=async(req,res)=>{
+    try{
+        const appliance_id= ObjectId(req.params.id) 
+        const doc=await db.db.collection('Appliances').deleteOne({_id:appliance_id})
+        console.log(doc)
+        utils.successResponse('Deleted Appliance',appliance_id,res)
+    }catch(e){
+        utils.handleError(res,e)
+    }
+}
+
+/**
+ * Api for adding a project
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+
+exports.addproject=async (req,res)=>{
+    try{
+        const err=validationResult(req)
+        if(err.errors.length!==0){
+            return utils.handleError(res,err.errors)
+        }
+        const doc=await db.db.collection('Project').insertOne(req.body)
+        utils.successResponse('Added Project !!',doc.ops,res)
+    }catch(e){
+    utils.handleError(res,e)
+}
+}
+
+/**
+ * Api for getting all projects
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+
+exports.getprojects=async(req,res)=>{
+    try{
+        const docs= await db.db.collection('Project').find({})
+        var arr=[]
+        await docs.forEach(doc=>{
+            arr.push(doc)
+        })
+        utils.successResponse('All Projects',arr,res)
+    }catch(e){
+utils.handleError(res,e)
+    }
+}
+
+/**
+ * Api for unpublishing a product
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+
+exports.unpublish_product=async(req,res)=>{
+    try{
+        const product_id=ObjectId(req.params.id)
+        await db.db.collection('Products').findAndModify({_id:product_id},[],{$set:{published:false}}) 
+        utils.successResponse('Product Unpublished!',product_id,res)
+    }catch(e){
+utils.handleError(res,e)
+    }
+}
+
+/**
+ * Api for publishing a product
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+
+exports.publish_product=async(req,res)=>{
+    try{
+        const product_id=ObjectId(req.params.id)
+        await db.db.collection('Products').findAndModify({_id:product_id},[],{$set:{published:true}}) 
+        utils.successResponse('Product published!',product_id,res)
+    }catch(e){
+utils.handleError(res,e)
+    }
+}
+
+/**
+ * Api for deleting a product
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+
+exports.delete_product=async(req,res)=>{
+    try{
+        const product_id= ObjectId(req.params.id) 
+        const doc=await db.db.collection('Products').deleteOne({_id:product_id})
+        utils.successResponse('Deleted Appliance',product_id,res)
     }catch(e){
         utils.handleError(res,e)
     }

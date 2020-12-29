@@ -30,6 +30,9 @@ const upload=multer({
     }
 })
 
+/**
+ * Api for registration of a subadmin 
+ */
 
 router.post(
     '/register_Subadmin',
@@ -38,11 +41,19 @@ router.post(
     controller.register
 )
 
+/**
+ * Api for logging in of a subadmin 
+ */
+
 router.post(
     '/login_Subadmin',
     validate.login_subadmin,
     controller.login
 )
+
+/**
+ * Api for getting details of logged in subadmin 
+ */
 
 router.get(
     '/me',
@@ -50,12 +61,36 @@ router.get(
     (req,res)=>res.send(req.subadmin)
 )
 
+/**
+ * Api for logging out of a subadmin 
+ */
 
 router.get(
     '/logout_Subadmin',
     SubAdmin_Auth,
     controller.logout
 )
+
+/**
+ * Api--> Subadmin choosing and adding product 
+ */
+
+router.post(    
+    '/subadmin_chooseproduct/:id',
+    Subadmin_Auth,
+    controller.addproduct
+)  
+
+/**
+ * Api--> Subadmin choosing and adding product 
+ */
+
+ router.get(
+     '/subadmin_getproducts',
+     Subadmin_Auth,
+     controller.getproducts
+)
+
 
 module.exports=router
 

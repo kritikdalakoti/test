@@ -123,3 +123,27 @@ exports.add_plans=[
     .isEmpty()
     .withMessage('IS_EMPTY'),
 ]
+
+exports.addcompany=[
+    check('company')        
+    .exists()
+    .withMessage('MISSING')
+    .not()
+    .isEmpty()
+    .withMessage('IS_EMPTY')
+]
+
+exports.addproject=[
+    check('project_name')        
+    .exists()
+    .withMessage('MISSING')
+    .not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
+    check('project_description')        
+    .exists()
+    .withMessage('MISSING')
+    .not()
+    .isEmpty()
+    .withMessage('IS_EMPTY')
+]

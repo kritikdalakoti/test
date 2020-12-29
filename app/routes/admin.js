@@ -44,6 +44,15 @@ router.post(
 )
 
 /**
+ * admin adding subadmin route
+ */
+
+ router.get(
+     '/add_subadmin/:id',
+     controllers.addsubadmin
+    )
+
+/**
  * Admin getting list of all verified subadmins routes
  */
 router.get(
@@ -66,11 +75,11 @@ router.get(
     '/all_products',
     controllers.get_Published_Products
 )
+//  
 
 /**
  * Admin deleting a particular subadmin route
-
- */
+*/
 
 router.delete(
     '/remove_Subadmin/:id',
@@ -108,12 +117,31 @@ router.post(
 )
 
 /**
+ * Admin adding company or brand
+ */
+
+ router.post(
+     '/add_company',
+     validate.addcompany,
+     controllers.addcompany
+     )
+
+/**
  * Api for getting subcategory and category
  */
 
 router.get(
     '/get_category_subcategory',
     controllers.get_category_subcategories
+)
+
+/**
+ * Api for getting company
+ */
+
+router.get(
+    '/get_company',
+    controllers.getcompany
 )
 
 /**
@@ -134,5 +162,66 @@ router.get(
     '/getplans',
      controllers.getplans
  )
+ /**
+ * Api for getting all appliances
+ */
+
+ router.get(
+     '/all_appliances',
+     controllers.getallappliances
+)
+
+/**
+ * Api for deleting a appliance 
+ */
+
+router.delete(
+    '/delete_appliance/:id',
+    controllers.delete_appliance
+)
+
+/**
+ * Api for creating a Project 
+ */
+
+router.post(
+    '/add_project',
+    validate.addproject,
+    controllers.addproject
+)
+
+/**
+ * Api for getting all Projects 
+ */
+
+ router.get(
+     '/get_projects',
+     controllers.getprojects
+ )
+
+/**
+ * Api for unpublishing a product 
+ */
+
+router.get(
+    '/unpublish_product/:id',
+    controllers.unpublish_product
+)
+
+/**
+ * Api for publishing a product 
+ */
+
+router.get(
+    '/publish_product/:id',
+    controllers.publish_product
+) 
+
+router.delete(
+    '/delete_product/:id',
+    controllers.delete_product
+)
+
+
 
 module.exports=router
